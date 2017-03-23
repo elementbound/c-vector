@@ -15,11 +15,8 @@ int main() {
 
     // Print them
     printf("Vector contents: \n");
-    // for(int i = 0; i < VECTOR_LENGTH(data); i++)
-    //    printf("\t%d\n", data[i]);
-
     VECTOR_FOREACH(data, int, val, 
-        printf("\t%d\n", val);
+        printf("\t%d\n", *val);
     )
 
     return 0;
