@@ -12,6 +12,12 @@
 	vector = VECTOR_ADD(vector, v); \
 } 
 
+// READ-ONLY! You can't modify the vector from inside the loop ( yet ) 
+#define VECTOR_FOREACH(vector, type, as_variable, code) \
+	for(int i=0; i < VECTOR_LENGTH(vector); ++i) { \
+		type as_variable = vector[i]; \
+		code \
+	}
 
 typedef struct 
 {
