@@ -12,18 +12,25 @@
 	vector = VECTOR_ADD(vector, v); \
 } 
 
-// READ-ONLY! You can't modify the vector from inside the loop ( yet ) 
-#define VECTOR_FOREACH(vector, type, as_variable, code) \
-	for(int i=0; i < VECTOR_LENGTH(vector); ++i) { \
-		type as_variable = vector[i]; \
-		code \
-	}
+#define VECTOR_FREE(v) _vector_free(_VECTOR_START(v))
+
+//void*-ok tömbje
+#define VECTOR_FREE_MULTIPLE(...) { \
+void* _to_free[]={__VA_ARGS__}; \
+int _length=sizeof(_to_free)/sizeof(_to_free[0]); \
+int i; \
+	for(i=0;i<_length;i++) \
+ 		free(_VECTOR_START(_to_free[i]));	\
+}
+
 
 typedef struct 
 {
 	unsigned _sizeof;
-	unsigned _count; 
+	unsigned _count;
+	unsigned _capacity;
 } VECTOR_G;
 
 void* _vector_create(int typesize);
 void* _vector_add(VECTOR_G* vector, void* item);
+void _vector_free(VECTOR_G* vector);
